@@ -403,7 +403,7 @@ END_MSWIN
 int main() {
   MagickBooleanType okay;
   Image *image;
-  MagickPixelPacket *color;
+  PixelPacket *color;
   char *name;
   ExceptionInfo *exception;
   okay = QueryMagickColorname(image, color, SVGCompliance, name, exception);

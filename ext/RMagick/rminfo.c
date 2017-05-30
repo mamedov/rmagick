@@ -214,9 +214,9 @@ static VALUE set_dbl_option(VALUE self, const char *option, VALUE value)
  */
 static char *pixel_packet_to_hexname(PixelPacket *pp, char *name)
 {
-    MagickPixelPacket mpp;
+    PixelPacket mpp;
 
-    GetMagickPixelPacket(NULL, &mpp);
+    GetPixelPacket(NULL, &mpp);
     rm_set_magick_pixel_packet(pp, &mpp);
     (void) GetColorTuple(&mpp, MagickTrue, name);
     return name;
@@ -300,7 +300,7 @@ Info_aref(int argc, VALUE *argv, VALUE self)
  *
  * Notes:
  *   - Essentially the same function as Info_define but paired with Info_aref
- *   - If the value is nil it is equivalent to Info_undefine. 
+ *   - If the value is nil it is equivalent to Info_undefine.
  *   - The 2 argument form is the original form. Added support for a single
  *     argument after ImageMagick started using Set/GetImageOption for options
  *     that aren't represented by fields in the ImageInfo structure.
@@ -2587,4 +2587,3 @@ Info_initialize(VALUE self)
     }
     return self;
 }
-

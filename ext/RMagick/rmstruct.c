@@ -244,7 +244,7 @@ Import_ColorInfo(const ColorInfo *ci)
 
     compliance_type = ci->compliance;
     compliance = ComplianceType_new(compliance_type);
-    color      = Pixel_from_MagickPixelPacket(&(ci->color));
+    color      = Pixel_from_PixelPacket(&(ci->color));
 
     RB_GC_GUARD(name);
     RB_GC_GUARD(compliance);
@@ -293,9 +293,9 @@ Export_ColorInfo(ColorInfo *ci, VALUE st)
     if (m != Qnil)
     {
         Data_Get_Struct(m, Pixel, pixel);
-        // For >= 6.3.0, ColorInfo.color is a MagickPixelPacket so we have to
+        // For >= 6.3.0, ColorInfo.color is a PixelPacket so we have to
         // convert the PixelPacket.
-        GetMagickPixelPacket(NULL, &ci->color);
+        GetPixelPacket(NULL, &ci->color);
         ci->color.red = (MagickRealType) pixel->red;
         ci->color.green = (MagickRealType) pixel->green;
         ci->color.blue = (MagickRealType) pixel->blue;
@@ -309,24 +309,24 @@ Export_ColorInfo(ColorInfo *ci, VALUE st)
 
 
 /**
- * Convert either a String color name or a Magick::Pixel to a MagickPixelPacket.
+ * Convert either a String color name or a Magick::Pixel to a PixelPacket.
  *
  * No Ruby usage (internal function)
  *
  * Notes:
- *   - The channel values in a MagickPixelPacket are doubles.
+ *   - The channel values in a PixelPacket are doubles.
  *
  * @param image the Image
- * @param mpp The MagickPixelPacket to modify
+ * @param mpp The PixelPacket to modify
  * @param color the name of the color
  */
 void
-Color_to_MagickPixelPacket(Image *image, MagickPixelPacket *mpp, VALUE color)
+Color_to_PixelPacket(Image *image, PixelPacket *mpp, VALUE color)
 {
     PixelPacket pp;
 
     // image can be NULL
-    GetMagickPixelPacket(image, mpp);
+    GetPixelPacket(image, mpp);
 
     memset(&pp, '\0', sizeof(pp));
     Color_to_PixelPacket(&pp, color);
@@ -846,7 +846,7 @@ Import_SegmentInfo(SegmentInfo *segment)
     RB_GC_GUARD(y1);
     RB_GC_GUARD(x2);
     RB_GC_GUARD(y2);
-    
+
     return rb_funcall(Class_Segment, rm_ID_new, 4, x1, y1, x2, y2);
 }
 
@@ -1121,4 +1121,3 @@ TypeMetric_to_s(VALUE self)
 
     return str;
 }
-

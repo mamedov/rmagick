@@ -41,7 +41,7 @@
 #undef WORDS_BIGENDIAN
 
 #include "MagickCore/MagickCore.h"
-#include "magick/magick-config.h"
+#include "MagickCore/magick-config.h"
 
 // Undef ImageMagick's versions of these symbols
 #undef PACKAGE_STRING
